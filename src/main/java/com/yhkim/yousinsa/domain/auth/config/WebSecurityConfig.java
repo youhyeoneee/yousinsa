@@ -1,7 +1,7 @@
-package com.yhkim.yousinsa.global.config;
+package com.yhkim.yousinsa.domain.auth.config;
 
-import com.yhkim.yousinsa.global.auth.JwtAuthenticationFilter;
-import com.yhkim.yousinsa.global.auth.JwtTokenProvider;
+import com.yhkim.yousinsa.domain.auth.JwtAuthenticationFilter;
+import com.yhkim.yousinsa.domain.auth.JwtTokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;

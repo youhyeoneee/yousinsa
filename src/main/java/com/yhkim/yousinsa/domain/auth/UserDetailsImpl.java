@@ -1,4 +1,4 @@
-package com.yhkim.yousinsa.global.auth;
+package com.yhkim.yousinsa.domain.auth;
 
 import com.yhkim.yousinsa.domain.user.entity.User;
 import org.springframework.security.core.GrantedAuthority;

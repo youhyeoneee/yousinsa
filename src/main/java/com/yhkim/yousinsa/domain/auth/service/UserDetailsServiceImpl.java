@@ -1,8 +1,8 @@
-package com.yhkim.yousinsa.global.auth.service;
+package com.yhkim.yousinsa.domain.auth.service;
 
+import com.yhkim.yousinsa.domain.auth.UserDetailsImpl;
 import com.yhkim.yousinsa.domain.user.entity.User;
 import com.yhkim.yousinsa.domain.user.repository.UserRepository;
-import com.yhkim.yousinsa.global.auth.UserDetailsImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

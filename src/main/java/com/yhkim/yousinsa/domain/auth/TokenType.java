@@ -1,4 +1,4 @@
-package com.yhkim.yousinsa.global.auth;
+package com.yhkim.yousinsa.domain.auth;
 
 public enum TokenType {
     ACCESS_TOKEN,
