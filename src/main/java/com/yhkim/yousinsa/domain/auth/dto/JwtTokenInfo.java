@@ -1,4 +1,4 @@
-package com.yhkim.yousinsa.global.auth.dto;
+package com.yhkim.yousinsa.domain.auth.dto;
 
 
 import lombok.Builder;

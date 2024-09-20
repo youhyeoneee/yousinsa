@@ -1,7 +1,7 @@
-package com.yhkim.yousinsa.global.auth;
+package com.yhkim.yousinsa.domain.auth;
 
 
-import com.yhkim.yousinsa.global.auth.dto.JwtTokenInfo;
+import com.yhkim.yousinsa.domain.auth.dto.JwtTokenInfo;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;

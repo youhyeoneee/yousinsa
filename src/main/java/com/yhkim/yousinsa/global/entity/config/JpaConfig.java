@@ -1,4 +1,4 @@
-package com.yhkim.yousinsa.global.config;
+package com.yhkim.yousinsa.global.entity.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
