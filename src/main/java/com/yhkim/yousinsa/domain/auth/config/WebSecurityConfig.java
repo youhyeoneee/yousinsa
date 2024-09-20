@@ -1,5 +1,6 @@
 package com.yhkim.yousinsa.domain.auth.config;
 
+import com.yhkim.yousinsa.domain.auth.JwtAuthenticationEntryPoint;
 import com.yhkim.yousinsa.domain.auth.JwtAuthenticationFilter;
 import com.yhkim.yousinsa.domain.auth.JwtTokenProvider;
 import org.springframework.context.annotation.Bean;
@@ -40,6 +41,7 @@ public class WebSecurityConfig {
         return new BCryptPasswordEncoder();
     }
     
+    
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         
@@ -54,10 +56,14 @@ public class WebSecurityConfig {
         http
                 .csrf((AbstractHttpConfigurer::disable))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/users/signup", "/api/users/login", "/api/auth/token", "/h2-console/**", "/swagger-ui/**").permitAll()
+                        .requestMatchers("/api/users/signup", "/api/users/login", "/api/auth/token", "/api/products",
+                                "/h2-console/**", "/swagger-ui/**").permitAll()
                         
-                        .anyRequest().authenticated()
-                )
+                        .anyRequest().authenticated())
+                .exceptionHandling(
+                        ex -> ex.authenticationEntryPoint(new JwtAuthenticationEntryPoint()));
+        
+        http
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
         
         return http.build();

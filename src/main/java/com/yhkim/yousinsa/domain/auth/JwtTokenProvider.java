@@ -2,8 +2,9 @@ package com.yhkim.yousinsa.domain.auth;
 
 
 import com.yhkim.yousinsa.domain.auth.dto.JwtTokenInfo;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
+import com.yhkim.yousinsa.global.exception.CustomException;
+import com.yhkim.yousinsa.global.exception.ErrorCode;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
@@ -141,6 +142,27 @@ public class JwtTokenProvider {
      * @return
      */
     private Claims parseClaims(String token) {
-        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+        try {
+            return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+        } catch (ExpiredJwtException e) {
+            throw new CustomException(ErrorCode.ACCESS_TOKEN_EXPIRED);
+        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
+            throw new CustomException(ErrorCode.INVALID_JWT_SIGNATURE);
+        } catch (UnsupportedJwtException e) {
+            throw new CustomException(ErrorCode.UNSUPPORTED_JWT);
+        } catch (IllegalArgumentException e) {
+            throw new CustomException(ErrorCode.INVALID_JWT_TOKEN);
+        }
+    }
+    
+    public boolean verifyToken(String token) {
+        try {
+            Claims claims = parseClaims(token);
+            
+            return claims.getExpiration()
+                    .after(new Date());
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

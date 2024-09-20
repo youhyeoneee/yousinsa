@@ -16,12 +16,17 @@ public enum ErrorCode {
     INVALID_TOKEN_TYPE(HttpStatus.BAD_REQUEST, "E400007", "잘못된 토큰 유형입니다. 이 작업에는 리프레시 토큰만 허용됩니다."),
     INVALID_JSON(HttpStatus.BAD_REQUEST, "E400008", "JSON 형식이 잘못되었습니다."),
     INVALID_METHOD(HttpStatus.BAD_REQUEST, "E40009", "허용되지 않은 Method입니다."),
+    INVALID_JWT_TOKEN(HttpStatus.BAD_REQUEST, "E400010", "잘못된 JWT 토큰입니다."),
     
     // user
     REFRESH_TOKEN_NOT_FOUND(HttpStatus.UNAUTHORIZED, "E401001", "리프레시 토큰이 유효하지 않거나 존재하지 않습니다."),
     ACCESS_TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, "E401002", "엑세스 토큰이 만료되었습니다. 새로운 엑세스 토큰을 발급받으려면 리프레시 토큰을 사용하세요."),
     REFRESH_TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, "E401003", "리프레시 토큰이 만료되었습니다. 계속하려면 다시 로그인하세요."),
     REFRESH_TOKEN_MISMATCH(HttpStatus.UNAUTHORIZED, "E401004", "제공된 리프레시 토큰이 저장된 토큰과 일치하지 않습니다."),
+    INVALID_JWT_SIGNATURE(HttpStatus.UNAUTHORIZED, "E401005", "잘못된 JWT 서명입니다."),
+    UNSUPPORTED_JWT(HttpStatus.UNAUTHORIZED, "E401006", "지원되지 않는 JWT 토큰입니다."),
+    
+    FORBIDDEN_ACCESS(HttpStatus.FORBIDDEN, "E403001", "접근 권한이 없습니다."),
     
     // user
     USERNAME_NOT_FOUND(HttpStatus.NOT_FOUND, "E404001", "등록되지 않은 계정입니다."),

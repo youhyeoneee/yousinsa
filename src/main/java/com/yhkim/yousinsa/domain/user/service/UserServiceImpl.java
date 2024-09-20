@@ -37,6 +37,7 @@ public class UserServiceImpl implements UserService {
      * @throws CustomException 계정이 이미 존재하는 경우 발생
      */
     @Override
+    @Transactional
     public SignupUserResponse signup(SignupUserRequest signupUserRequest) {
         if (isUserExist(signupUserRequest.getUsername())) {
             throw new CustomException(ErrorCode.USERNAME_ALREADY_EXIST);
@@ -98,6 +99,17 @@ public class UserServiceImpl implements UserService {
                 .build();
     }
     
+    /**
+     * 계정으로 유저 찾기
+     *
+     * @param username 확인할 계정
+     * @return User 찾은 유저 정보
+     * @throws CustomException USERNAME_NOT_FOUND 등록되지 않은 계정
+     */
+    @Override
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username).orElseThrow(() -> new CustomException(ErrorCode.USERNAME_NOT_FOUND));
+    }
     
     /**
      * 계정 존재 여부 확인

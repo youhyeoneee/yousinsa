@@ -1,7 +1,6 @@
 package com.yhkim.yousinsa.domain.auth;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yhkim.yousinsa.global.exception.ErrorCode;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -19,7 +18,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 
 import java.io.IOException;
-import java.util.Map;
+
+import static com.yhkim.yousinsa.global.api.ApiUtils.setResponse;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -36,7 +36,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             
             String token = jwtTokenProvider.resolveToken(httpRequest);
             
-            if (token != null) {
+            if (token != null && jwtTokenProvider.verifyToken(token)) {
                 Authentication authentication = jwtTokenProvider.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
@@ -46,34 +46,19 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             logger.error("만료된 JWT 토큰입니다.");
             jwtExceptionHandler((HttpServletResponse) response, ErrorCode.ACCESS_TOKEN_EXPIRED);
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-            // TODO: Error code 생성 및 처리
             logger.error("잘못된 JWT 서명입니다.");
+            jwtExceptionHandler((HttpServletResponse) response, ErrorCode.INVALID_JWT_SIGNATURE);
         } catch (UnsupportedJwtException e) {
-            // TODO: Error code 생성 및 처리
             logger.error("지원되지 않는 JWT 토큰입니다.");
+            jwtExceptionHandler((HttpServletResponse) response, ErrorCode.UNSUPPORTED_JWT);
         } catch (IllegalArgumentException e) {
-            // TODO: Error code 생성 및 처리
             logger.error("JWT 토큰이 잘못되었습니다.");
+            jwtExceptionHandler((HttpServletResponse) response, ErrorCode.INVALID_JWT_TOKEN);
         }
     }
     
     // 토큰에 대한 오류가 발생했을 때, 커스터마이징해서 Exception 처리 값을 클라이언트에게 알려준다.
     public void jwtExceptionHandler(HttpServletResponse response, ErrorCode errorCode) {
-        response.setStatus(errorCode.getHttpStatus().value());
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            String json = objectMapper.writeValueAsString(Map.of(
-                    "success", false,
-                    "message", errorCode.getMessage(),
-                    "http_status", errorCode.getHttpStatus().value(),
-                    "error_code", errorCode.getErrorCode()
-            ));
-            response.getWriter().write(json);
-        } catch (Exception e) {
-            log.error("Error writing JSON response", e);
-        }
+        setResponse(response, errorCode);
     }
 }
