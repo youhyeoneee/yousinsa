@@ -9,13 +9,12 @@
 ## 목차
 
 1. [프로젝트 환경](#프로젝트-환경)
-2. [Quick Start](#quick-start)
-3. [Quick Stop](#quick-stop)
-4. [주요 기능](#주요-기능)
-5. [ERD](#erd)
-6. [API 명세서](#api-명세서)
-7. [디렉토리 구조](#디렉토리-구조)
-8. [프로젝트 개선 사항 및 예정 작업](#프로젝트-개선-사항-및-예정-작업)
+2. [Quick Start & Stop](#quick-start--stop)
+3. [주요 기능](#주요-기능)
+4. [ERD](#erd)
+5. [API 명세서](#api-명세서)
+6. [디렉토리 구조](#디렉토리-구조)
+7. [프로젝트 개선 사항 및 예정 작업](#프로젝트-개선-사항-및-예정-작업)
 
 ## 프로젝트 환경
 
@@ -28,8 +27,12 @@
 | ![Docker](https://img.shields.io/badge/docker-%23296AAB.svg?style=for-the-badge&logo=docker&logoColor=white)    | Docker 27.2.0   |
 | ![Docker Compose](https://img.shields.io/badge/docker%20compose-%2318A9D0.svg?style=for-the-badge&logo=docker&logoColor=white) | Docker Compose 2.29.2 |
 
-## Quick Start
+## Quick Start & Stop
 
+<details>
+<summary><strong>Quick Start</strong></summary>
+<div markdown="1">
+    
 ### 1. 사전 준비 사항
 
 - Docker 및 Docker Compose가 설치되어 있어야 합니다.
@@ -58,9 +61,12 @@ docker-compose -f ./docker-compose.auth.yml up -d
 ```shell
 java -jar ./build/libs/yousinsa-0.0.1-SNAPSHOT.jar
 ```
+</details>
 
 
-## Quick Stop
+<details>
+<summary><strong>Quick Stop</strong></summary>
+<div markdown="1">
 
 ### 1. 서버 종료
 
@@ -79,6 +85,8 @@ sudo kill -9 [PID] # [PID]는 실제 프로세스 ID로 대체
 ```shell
 docker-compose -f ./docker-compose.auth.yml down
 ```
+
+</details>
 
 ## 주요 기능
 
