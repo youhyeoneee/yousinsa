@@ -9,7 +9,7 @@ import lombok.Getter;
 @Getter
 @Builder
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class ProductDetailResponse {
+public class GetProductDetailResponse {
     private Integer defaultPrice;
     private Integer discountedPrice;
     private Double discountRate;

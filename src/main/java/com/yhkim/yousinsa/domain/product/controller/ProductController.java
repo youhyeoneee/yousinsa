@@ -40,11 +40,11 @@ public class ProductController {
         Page<T> productsPage;
         if (authentication == null) {
             log.info("로그인 x");
-            productsPage = (Page<T>) productService.getProducts(pageable);
+            productsPage = (Page<T>) productService.getProductInfos(pageable);
         } else {
             log.info(authentication.getName());
             User user = findUserByAuthentication(authentication);
-            productsPage = (Page<T>) productService.getProductsWithDetail(pageable, user);
+            productsPage = (Page<T>) productService.getProductDetails(pageable, user);
         }
         
         Links links = createLinks(productsPage, request);

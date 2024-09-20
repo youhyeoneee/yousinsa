@@ -11,13 +11,13 @@ import lombok.Getter;
 @Getter
 @Builder
 @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class GetProductsResponse {
+public class GetProductResponse {
     private ProductInfo productInfo;
     private BrandInfo brandInfo;
     
-    public static GetProductsResponse fromEntity(Product product) {
+    public static GetProductResponse fromEntity(Product product) {
         
-        return GetProductsResponse.builder()
+        return GetProductResponse.builder()
                 .productInfo(product.getProductInfo())
                 .brandInfo(product.getBrand().getBrandInfo())
                 .build();
