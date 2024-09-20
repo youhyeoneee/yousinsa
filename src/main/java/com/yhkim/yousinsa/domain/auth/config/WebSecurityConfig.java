@@ -56,7 +56,8 @@ public class WebSecurityConfig {
         http
                 .csrf((AbstractHttpConfigurer::disable))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/users/signup", "/api/users/login", "/api/auth/token", "/h2-console/**", "/swagger-ui/**").permitAll()
+                        .requestMatchers("/api/users/signup", "/api/users/login", "/api/auth/token", "/api/products",
+                                "/h2-console/**", "/swagger-ui/**").permitAll()
                         
                         .anyRequest().authenticated())
                 .exceptionHandling(
