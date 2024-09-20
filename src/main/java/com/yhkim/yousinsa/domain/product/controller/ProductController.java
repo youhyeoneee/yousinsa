@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -35,16 +36,17 @@ public class ProductController {
     public <T> ResponseEntity<ApiUtils.SuccessLinksResponse<List<T>, Links>> getProducts(
             Authentication authentication,
             Pageable pageable,
+            @RequestParam(required = false, name = "brand") String brandName,
             HttpServletRequest request) {
         
         Page<T> productsPage;
         if (authentication == null) {
             log.info("로그인 x");
-            productsPage = (Page<T>) productService.getProductInfos(pageable);
+            productsPage = (Page<T>) productService.getProductInfos(pageable, brandName);
         } else {
             log.info(authentication.getName());
             User user = findUserByAuthentication(authentication);
-            productsPage = (Page<T>) productService.getProductDetails(pageable, user);
+            productsPage = (Page<T>) productService.getProductDetails(pageable, user, brandName);
         }
         
         Links links = createLinks(productsPage, request);
