@@ -2,12 +2,18 @@ package com.yhkim.yousinsa.global.api;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yhkim.yousinsa.global.exception.ErrorCode;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Map;
+
+@Slf4j
 public class ApiUtils {
     
     public static <T> ResponseEntity<SuccessResponse<T>> success(HttpStatus httpStatus, String message, T data) {
@@ -64,6 +70,25 @@ public class ApiUtils {
         public FailedResponse(ErrorCode errorCode) {
             super(false, errorCode.getHttpStatus().value(), errorCode.getMessage());
             this.errorCode = errorCode.getErrorCode();
+        }
+    }
+    
+    public static void setResponse(HttpServletResponse response, ErrorCode errorCode) {
+        response.setStatus(errorCode.getHttpStatus().value());
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            String json = objectMapper.writeValueAsString(Map.of(
+                    "success", false,
+                    "message", errorCode.getMessage(),
+                    "http_status", errorCode.getHttpStatus().value(),
+                    "error_code", errorCode.getErrorCode()
+            ));
+            response.getWriter().write(json);
+        } catch (Exception e) {
+            log.error("Error writing JSON response", e);
         }
     }
 }

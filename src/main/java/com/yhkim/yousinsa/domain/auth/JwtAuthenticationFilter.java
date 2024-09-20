@@ -1,7 +1,6 @@
 package com.yhkim.yousinsa.domain.auth;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yhkim.yousinsa.global.exception.ErrorCode;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -19,7 +18,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 
 import java.io.IOException;
-import java.util.Map;
+
+import static com.yhkim.yousinsa.global.api.ApiUtils.setResponse;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -59,21 +59,6 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     
     // 토큰에 대한 오류가 발생했을 때, 커스터마이징해서 Exception 처리 값을 클라이언트에게 알려준다.
     public void jwtExceptionHandler(HttpServletResponse response, ErrorCode errorCode) {
-        response.setStatus(errorCode.getHttpStatus().value());
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            String json = objectMapper.writeValueAsString(Map.of(
-                    "success", false,
-                    "message", errorCode.getMessage(),
-                    "http_status", errorCode.getHttpStatus().value(),
-                    "error_code", errorCode.getErrorCode()
-            ));
-            response.getWriter().write(json);
-        } catch (Exception e) {
-            log.error("Error writing JSON response", e);
-        }
+        setResponse(response, errorCode);
     }
 }
