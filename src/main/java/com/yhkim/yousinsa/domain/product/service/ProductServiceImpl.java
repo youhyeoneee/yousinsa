@@ -9,6 +9,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
@@ -22,6 +25,23 @@ public class ProductServiceImpl implements ProductService {
     
     @Override
     public Page<GetProductDetailResponse> getProductDetails(Pageable pageable, User user) {
-        return null;
+        // 등급 + 요일에 따른 할인율
+        Integer discountRate = user.getGrade().getDiscountRate() + getDiscountRateByDay();
+        
+        return productRepository.findAllByOrderByIdDesc(pageable)
+                .map(product -> GetProductDetailResponse.fromEntity(product, discountRate));
+    }
+    
+    private Integer getDiscountRateByDay() {
+        LocalDate today = LocalDate.now();
+        DayOfWeek dayOfWeek = today.getDayOfWeek();
+        int dayNumber = dayOfWeek.getValue();
+        
+        // 월요일에 1% 할인 추가
+        if (dayNumber == 1) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }

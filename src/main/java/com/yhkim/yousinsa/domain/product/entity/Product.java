@@ -38,4 +38,13 @@ public class Product extends BaseEntity {
                 .name(name)
                 .build();
     }
+    
+    public Integer getDiscountedPrice(Integer discountRate) {
+        if (discountRate < 0 || discountRate > 100) {
+            throw new IllegalArgumentException("할인율은 0에서 100 사이의 값이어야 합니다.");
+        }
+        
+        Integer discountAmount = (price * discountRate) / 100;
+        return price - discountAmount;
+    }
 }
