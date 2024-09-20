@@ -11,9 +11,11 @@ public enum ErrorCode {
     INVALID_INPUT_FORMAT(HttpStatus.BAD_REQUEST, "E400000", "잘못된 입력 형식입니다."),
     INVALID_USERNAME_FORMAT(HttpStatus.BAD_REQUEST, "E400001", "잘못된 사용자 이름 형식입니다."),
     INVALID_PASSWORD_FORMAT(HttpStatus.BAD_REQUEST, "E400002", "잘못된 비밀번호 형식입니다."),
+    INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "E400005", "비밀번호가 일치하지 않습니다."),
     MISSING_REFRESH_TOKEN(HttpStatus.BAD_REQUEST, "E400006", "요청 헤더에 'Refresh-Token'이 누락되었습니다."),
     INVALID_TOKEN_TYPE(HttpStatus.BAD_REQUEST, "E400007", "잘못된 토큰 유형입니다. 이 작업에는 리프레시 토큰만 허용됩니다."),
     INVALID_JSON(HttpStatus.BAD_REQUEST, "E400008", "JSON 형식이 잘못되었습니다."),
+    INVALID_METHOD(HttpStatus.BAD_REQUEST, "E40009", "허용되지 않은 Method입니다."),
     
     // user
     REFRESH_TOKEN_NOT_FOUND(HttpStatus.UNAUTHORIZED, "E401001", "리프레시 토큰이 유효하지 않거나 존재하지 않습니다."),

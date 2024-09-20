@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -79,5 +80,13 @@ public class GlobalExceptionHandler {
         log.error("HttpMessageNotReadableException", ex);
         
         return failed(ErrorCode.INVALID_JSON);
+    }
+    
+    @ExceptionHandler(value = {HttpRequestMethodNotSupportedException.class})
+    public ResponseEntity<ApiUtils.FailedResponse> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException ex) {
+        
+        log.error("HttpRequestMethodNotSupportedException", ex);
+        
+        return failed(ErrorCode.INVALID_METHOD);
     }
 }
