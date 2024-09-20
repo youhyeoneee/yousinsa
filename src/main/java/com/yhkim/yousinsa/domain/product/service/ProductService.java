@@ -9,8 +9,8 @@ import org.springframework.data.domain.Pageable;
 public interface ProductService {
     
     
-    Page<GetProductResponse> getProductInfos(Pageable pageable);
+    Page<GetProductResponse> getProductInfos(Pageable pageable, String brandName);
     
-    Page<GetProductDetailResponse> getProductDetails(Pageable pageable, User user);
+    Page<GetProductDetailResponse> getProductDetails(Pageable pageable, User user, String brandName);
     
 }
