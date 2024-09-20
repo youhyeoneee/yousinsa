@@ -36,7 +36,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             
             String token = jwtTokenProvider.resolveToken(httpRequest);
             
-            if (token != null) {
+            if (token != null && jwtTokenProvider.verifyToken(token)) {
                 Authentication authentication = jwtTokenProvider.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
@@ -46,14 +46,14 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             logger.error("만료된 JWT 토큰입니다.");
             jwtExceptionHandler((HttpServletResponse) response, ErrorCode.ACCESS_TOKEN_EXPIRED);
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-            // TODO: Error code 생성 및 처리
             logger.error("잘못된 JWT 서명입니다.");
+            jwtExceptionHandler((HttpServletResponse) response, ErrorCode.INVALID_JWT_SIGNATURE);
         } catch (UnsupportedJwtException e) {
-            // TODO: Error code 생성 및 처리
             logger.error("지원되지 않는 JWT 토큰입니다.");
+            jwtExceptionHandler((HttpServletResponse) response, ErrorCode.UNSUPPORTED_JWT);
         } catch (IllegalArgumentException e) {
-            // TODO: Error code 생성 및 처리
             logger.error("JWT 토큰이 잘못되었습니다.");
+            jwtExceptionHandler((HttpServletResponse) response, ErrorCode.INVALID_JWT_TOKEN);
         }
     }
     
