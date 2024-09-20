@@ -23,6 +23,8 @@ public enum ErrorCode {
     REFRESH_TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, "E401003", "리프레시 토큰이 만료되었습니다. 계속하려면 다시 로그인하세요."),
     REFRESH_TOKEN_MISMATCH(HttpStatus.UNAUTHORIZED, "E401004", "제공된 리프레시 토큰이 저장된 토큰과 일치하지 않습니다."),
     
+    FORBIDDEN_ACCESS(HttpStatus.FORBIDDEN, "E403001", "접근 권한이 없습니다."),
+    
     // user
     USERNAME_NOT_FOUND(HttpStatus.NOT_FOUND, "E404001", "등록되지 않은 계정입니다."),
     
