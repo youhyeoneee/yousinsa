@@ -1,6 +1,8 @@
 ## 유신사
 
-브랜드별 상품 목록 조회가 가능한 서비스입니다.
+- 본 서비스는 사용자와 상품 정보 관리에 필요한 REST API 서버입니다.
+- 사용자는 회원가입 및 로그인을 통해 서비스에 접근하며, 로그인 상태 및 사용자 유형에 따라 상품 정보가 달라집니다.
+- 상품 목록 API에서는 사용자의 로그인 여부와 유형에 따라 가격 정보가 다르게 노출되며, 요일에 따른 추가 할인이 적용됩니다. 또한, 상품은 브랜드 이름으로 검색할 수 있고, 페이지네이션이 지원됩니다.
 
 > 기간 : 2024.09.21 (4시간)
 
@@ -107,6 +109,14 @@ docker-compose -f ./docker-compose.auth.yml down
 ## API 명세서
 
 <br/>
+
+| No | Title      | Method   | URL                     | 
+|----|------------|----------|-------------------------|
+| 1  | 회원가입    | `POST`   | `/api/users/signup`             | 
+| 2  | 로그인 | `POST`  | `/api/users/login`      |   
+| 3  | 토큰 재발급    | `GET` | `/api/auth/token`      |    
+| 4  | 상품 목록 조회 | `GET`    | `/api/products?page={page}&size={size}`             |    
+| 5  | 브랜드별 상품 목록 조회    | `GET`    | `/api/products?page={page}&size={size}&brand={brand}` |    
 
 - [Postman](https://documenter.getpostman.com/view/9878847/2sAXqta1J2)에서 예시 Request, Response을 확인할 수 있습니다.
 
